@@ -20,9 +20,15 @@ public class GameController : MonoBehaviour
     }
 
     public void OnEndMove()
-    { 
+    {
+        Room.DoorTyps doorType = roomMaker.CurrentRoom.getDoorType(cameraController.LastClickObject);
         Vector3 newPlayerPosition = roomMaker.CurrentRoom.GetNextRoomPosition(cameraController.LastClickObject);
-        roomMaker.moveNextFloor();
+
+        if(doorType == Room.DoorTyps.Floor)
+            roomMaker.moveNextFloor();
+        else
+            roomMaker.moveSameFloor();
+
         characterController.Movement.MoveToPoint(newPlayerPosition, true);
     }
 }

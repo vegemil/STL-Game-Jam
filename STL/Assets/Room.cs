@@ -22,6 +22,19 @@ public class Room : MonoBehaviour
     public GameObject FloorDoor => floorDoor;
     public Vector3 CenterPosition => center.transform.position;
 
+    public DoorTyps getDoorType(GameObject targetDoor)
+    {
+        DoorTyps enterDoorType = DoorTyps.Floor; 
+
+        if (targetDoor == leftDoor)
+            enterDoorType = DoorTyps.Left;
+        else if (targetDoor == rightDoor)
+            enterDoorType = DoorTyps.Right;
+        else if (targetDoor == floorDoor)
+            enterDoorType = DoorTyps.Floor;
+
+        return enterDoorType;
+    }
 
     public Vector3 GetNextRoomPosition(GameObject enterDoor)
     {
