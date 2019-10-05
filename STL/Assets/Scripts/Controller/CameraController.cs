@@ -1,9 +1,6 @@
-﻿using DG.Tweening;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using DG.Tweening;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class CameraController : MonoBehaviour
 {
@@ -31,6 +28,7 @@ public class CameraController : MonoBehaviour
 
     private void Awake()
     {
+        DOTween.Init(true, true, LogBehaviour.ErrorsOnly);
         camera = gameObject.GetComponent<Camera>();
         isMovingCamera = false;
     }
@@ -75,12 +73,14 @@ public class CameraController : MonoBehaviour
             inMovePlayer.PlayTween();
             if (onEndOutMove != null)
                 onEndOutMove();
+            DOTween.Complete(outMovePlayer);
         };
         inMovePlayer.OnComplate = (tween) =>
          {
              if (onEndInMove != null)
                  onEndInMove();
              isMovingCamera = false;
+             DOTween.Complete(inMovePlayer);
          };
     }
 

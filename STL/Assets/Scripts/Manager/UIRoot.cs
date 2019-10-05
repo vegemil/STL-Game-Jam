@@ -24,7 +24,7 @@ public class UIRoot : Singleton<UIRoot>
 
     private void Start()
     {
-        DOTween.Init(true, true, LogBehaviour.ErrorsOnly);
+        DOTween.Init(true, true, LogBehaviour.Default);
         SwitchMenu(MenuType.Title);
     }
 

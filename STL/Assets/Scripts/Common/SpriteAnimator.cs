@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
-using DG.Tweening;
+﻿using UnityEngine;
 using static CharacterSpriteData;
 
 public class SpriteAnimator : MonoBehaviour
