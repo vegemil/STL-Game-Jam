@@ -41,24 +41,3 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: leftWall
-    uniqueID: 365681015
-    locked: 0
-  - name: rightWall
-    uniqueID: 687312099
-    locked: 0
-  - name: floor
-    uniqueID: 3959228153
-    locked: 0
-  - name: leftDoor
-    uniqueID: 3860001565
-    locked: 0
-  - name: rightDoor
-    uniqueID: 1306858743
-    locked: 0
-<<<<<<< HEAD
-  - name: floorDoor
-    uniqueID: 2740836949
-    locked: 0
-=======
->>>>>>> Room
