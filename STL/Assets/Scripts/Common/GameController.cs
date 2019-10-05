@@ -47,10 +47,7 @@ public class GameController : MonoBehaviour
         {
             Vector3 newPlayerPosition = roomMaker.CurrentRoom.GetNextRoomPosition(cameraController.LastClickObject);
 
-            if (doorType == Room.DoorTyps.Floor)
-                roomMaker.moveNextFloor();
-            else
-                roomMaker.moveSameFloor();
+            roomMaker.moveRoom(doorType);
 
             characterController.Movement.MoveToPoint(newPlayerPosition, true);
         }, ()=>

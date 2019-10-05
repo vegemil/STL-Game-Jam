@@ -16,6 +16,7 @@ public class UIRoot : Singleton<UIRoot>
 
     [SerializeField] private GameObject[] MenuRoots;
     [SerializeField] private RawImage titleImage;
+    [SerializeField] private RawImage[] endingImages;
     [SerializeField] private float tweenDelay;
 
     Tween fadeTween;
@@ -23,6 +24,7 @@ public class UIRoot : Singleton<UIRoot>
 
     private void Start()
     {
+        DOTween.Init(true, true, LogBehaviour.ErrorsOnly);
         SwitchMenu(MenuType.Title);
     }
 
@@ -40,16 +42,41 @@ public class UIRoot : Singleton<UIRoot>
         if (fadeTween!= null && fadeTween.IsPlaying())
             return;
 
+        GameObject uiManager = GameObject.Find("RoomManager");
+        MakeRooms makeRooms = uiManager.GetComponent<MakeRooms>();
+        makeRooms.resetRoom();
+
         fadeTween = titleImage.DOFade(0, tweenDelay).OnComplete(() =>
         {
-            SwitchMenu(MenuType.Main); 
+            SwitchMenu(MenuType.Main);
+            titleImage.color = Color.white;
+
+            DOTween.Complete(fadeTween);
         }); 
     }
 
+    public void setEndingImage(Room.DoorTyps doorType)
+    {
+        if (fadeTween != null && fadeTween.IsPlaying())
+            return;
+
+        foreach (var root in endingImages)
+        {
+            root.gameObject.SetActive(false);
+        }
+
+        endingImages[(int)doorType].gameObject.SetActive(true);
+
+        fadeTween = endingImages[(int)doorType].DOFade(255, 0).OnComplete(() =>
+        {
+            SwitchMenu(MenuType.Ending);
+            DOTween.Complete(fadeTween);
+        });
+    }
 
     public void OnClickEnding()
     {
-
+        SwitchMenu(MenuType.Title);
     }
 
 

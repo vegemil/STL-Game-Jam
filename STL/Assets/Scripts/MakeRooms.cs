@@ -8,6 +8,7 @@ public class MakeRooms : MonoBehaviour
 {
     public Action onCreateRoom;
     public int MAX_FLOOR = 2;
+    public int MAX_IMAGE = 5;
 
     private string prefabPath = "Prefabs/";
     private string texturePath = "Texture/";
@@ -33,14 +34,19 @@ public class MakeRooms : MonoBehaviour
         string[] doorNames = { "FD", "LD", "RD" };
 
         int temp = 0;
-        foreach(string doorName in doorNames)
+        foreach (string doorName in doorNames)
         {
             GameObject door = room.transform.Find(doorName).gameObject;
-            if(door)
+            if (door)
             {
                 int isShow = UnityEngine.Random.Range(0, 2);
 
-                door.SetActive(index == temp || Convert.ToBoolean(isShow));
+                if (layer < MAX_FLOOR - 1)
+                    door.SetActive(index == temp || Convert.ToBoolean(isShow));
+                else
+                {
+                    door.SetActive(true);
+                }
             }
             temp++;
         }
@@ -48,7 +54,7 @@ public class MakeRooms : MonoBehaviour
 
     private string getObjectName(string prefix)
     {
-        int index = UnityEngine.Random.Range(0, 5);
+        int index = UnityEngine.Random.Range(0, MAX_IMAGE);
 
         return prefix + layer.ToString() + index.ToString();
     }
@@ -65,33 +71,65 @@ public class MakeRooms : MonoBehaviour
         }
     }
 
-    public void moveNextFloor()
+    public void moveRoom(Room.DoorTyps doorTyps)
     {
-        layer++;
-
-        if(layer >= MAX_FLOOR)
+        if(doorTyps == Room.DoorTyps.Floor || layer == MAX_FLOOR - 1)
         {
-            layer = 0;
+            layer++;
         }
 
-        if(layer == MAX_FLOOR)
+        if (!checkEnding(doorTyps))
         {
-            GameObject floorDoor = room.transform.Find("FD").gameObject;
-            floorDoor.SetActive(false);
+            makeRoom();
         }
-
-        makeRoom();
-    }
-
-    public void moveSameFloor()
-    {
-        makeRoom();
+        else
+        {
+            enableRoomBtn(false);
+        }
     }
 
     void makeItem()
     {
 
     }
+
+    bool checkEnding(Room.DoorTyps doorType)
+    {
+        bool isEnding = false;
+        if(layer >= (MAX_FLOOR))
+        {
+            GameObject uiManager = GameObject.Find("UIMainRoot");
+            UIRoot uiRoot = uiManager.GetComponent<UIRoot>();
+            uiRoot.setEndingImage(doorType);
+            isEnding = true;
+        }
+
+        return isEnding;
+    }
+
+    public void resetRoom()
+    {
+        layer = 0;
+        makeRoom();
+        enableRoomBtn(true);
+    }
+
+    void enableRoomBtn(bool isClick)
+    {
+        string[] doorNames = { "FD", "LD", "RD" };
+
+        int temp = 0;
+        foreach (string doorName in doorNames)
+        {
+            GameObject door = room.transform.Find(doorName).gameObject;
+            if (door)
+            {
+                door.GetComponent<BoxCollider>().enabled = isClick;
+            }
+            temp++;
+        }
+    }
+
 
     // Start is called before the first frame update
     void Start()
