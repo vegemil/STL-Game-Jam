@@ -5,59 +5,61 @@ using UnityEngine;
 
 public class MakeRooms : MonoBehaviour
 {
-    //private GameObject leftWall;
-    //private GameObject rightWall;
-    //private GameObject floor;
     private string prefabPath = "Prefabs/";
+    private string texturePath = "Texture/";
+    private int layer = 0;
 
-    void makeRoom(int layer)
+    private GameObject room;
+
+
+    private void makeRoom()
     {
+        GameObject leftWall = room.transform.Find("leftWall").gameObject;
+        GameObject rightWall = room.transform.Find("rightWall").gameObject;
+        GameObject floor = room.transform.Find("floor").gameObject;
+
         // 왼쪽 벽
-        string name = getObjectName(layer);
+        setSprite(leftWall, "L");
+        setSprite(rightWall, "R");
+        setSprite(floor, "F");
 
-        GameObject leftWall = Resources.Load(prefabPath + "leftWall", typeof(GameObject)) as GameObject;
-
-        // 오른쪽 벽
-        name = getObjectName(layer);
-        //source = Resources.Load(prefabPath /*+ "R" + name + ".prefab"*/ + "rightWall.prefab");
-        GameObject rightWall = Resources.Load(prefabPath + "rightWall", typeof(GameObject)) as GameObject;
-
-        // 바닥
-        name = getObjectName(layer);
-        //source = Resources.Load(prefabPath /*+ "F" + name + ".prefab"*/ + "floor.prefab");
-        GameObject floor = Resources.Load(prefabPath + "floor", typeof(GameObject)) as GameObject;
-
-        //layer += 1;
-        GameObject parent = new GameObject();
-        parent.name = layer.ToString() + "F";
-
-        leftWall.transform.SetParent(parent.transform, false);
-
-
-        Instantiate(floor);
-        Instantiate(rightWall);
-        Instantiate(leftWall);
+        Instantiate(room);
     }
 
-    string getObjectName(int layer)
+    private string getObjectName(string prefix)
     {
         int index = Random.Range(0, 5);
 
-        return layer.ToString() + index.ToString() + ".prefab";
+        return prefix + layer.ToString() + index.ToString();
     }
 
-    void makeRooms()
+    private void setSprite(GameObject obj, string prefix)
     {
-        for(int i = 0; i < 4; ++i)
+        string objName = getObjectName(prefix);
+        var render = obj.GetComponent<SpriteRenderer>();
+        if (render)
         {
-            makeRoom(i);
+            Sprite sprite = Resources.Load(texturePath + objName, typeof(Sprite)) as Sprite;
+            render.sprite = sprite;
         }
+    }
+
+    public void moveNextFloor()
+    {
+        layer++;
+        makeRoom();
+    }
+
+    public void moveSameFloor()
+    {
+        makeRoom();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        makeRoom(1);
+        room = Resources.Load(prefabPath + "Room", typeof(GameObject)) as GameObject;
+        makeRoom();
     }
 
     // Update is called once per frame
