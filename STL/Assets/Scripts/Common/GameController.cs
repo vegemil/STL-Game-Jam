@@ -7,10 +7,10 @@ public class GameController : MonoBehaviour
     [SerializeField] private MakeRooms roomMaker;
     [SerializeField] private CharacterController characterController;
     [SerializeField] private CameraController cameraController;
+    private int currentLayer;
 
     private void OnEnable()
-    {
-        Initalize();
+    { 
     }
 
     public void Initalize()
@@ -19,7 +19,8 @@ public class GameController : MonoBehaviour
         roomMaker.onEndGame = OnEndGame;
         characterController.Initalize();
         characterController.Movement.OnEndMove = OnEndMove;
-        AudioManager.Instance.PlayBGM(AudioManager.BGMType.Default);
+        UpdateLayerBGM();
+        currentLayer = 0;
     }
 
     public void OnEndMove()
@@ -34,17 +35,20 @@ public class GameController : MonoBehaviour
         cameraController.CleaeClickObject();
         switch (doorType)
         {
-            case Room.DoorTyps.Floor:
+            case Room.DoorTyps.Floor: 
                 cameraMoveDirection = CameraController.MoveDirectionType.Bottom;
                 break;
-            case Room.DoorTyps.Right:
+            case Room.DoorTyps.Right: 
                 cameraMoveDirection = CameraController.MoveDirectionType.Right;
                 break;
-            case Room.DoorTyps.Left:
+            case Room.DoorTyps.Left: 
                 cameraMoveDirection = CameraController.MoveDirectionType.Left;
                 break; 
         }
-
+        int SFIndex = (int)AudioManager.EffectType.CameraMoveLeft + (int)doorType;
+        AudioManager.Instance.PlayEffectAudio((AudioManager.EffectType)SFIndex);
+        SFIndex = (int)AudioManager.EffectType.LeftDoor + (int)doorType;
+        AudioManager.Instance.PlayEffectAudio((AudioManager.EffectType)SFIndex);
 
         cameraController.PlayMove(cameraMoveDirection, () =>
         {
@@ -55,14 +59,44 @@ public class GameController : MonoBehaviour
             characterController.Movement.MoveToPoint(newPlayerPosition, true);
         }, ()=>
         {
+            if(doorType == Room.DoorTyps.Floor)
+                AudioManager.Instance.PlayEffectAudio(AudioManager.EffectType.Landing);
         });
         
+    }
+
+    void UpdateLayerBGM()
+    {
+        if (currentLayer == roomMaker.RoomLayer)
+            return;
+        currentLayer = roomMaker.RoomLayer;
+        if (roomMaker.RoomLayer < 2)
+        {
+            AudioManager.Instance.StopBGM();
+        }
+        else if (roomMaker.RoomLayer < 4)
+        {
+            AudioManager.Instance.SetLoopBGM(false);
+            AudioManager.Instance.PlayBGM(AudioManager.BGMType.State3_4);
+        }
+        else if (roomMaker.RoomLayer < 6)
+        {
+            AudioManager.Instance.SetLoopBGM(true);
+            AudioManager.Instance.PlayBGM(AudioManager.BGMType.State5_7);
+        }
+        else
+        {
+            AudioManager.Instance.PlayBGM(AudioManager.BGMType.LastState);
+        }
     }
 
     void OnChangedRoom()
     {
         CharacterSpriteData.AnimationTyps newAnimation = (CharacterSpriteData.AnimationTyps)roomMaker.RoomLayer;
         characterController.Character.SpriteAnimator.SetAnimationData(newAnimation);
+
+        UpdateLayerBGM();
+
     }
 
     void OnEndGame()

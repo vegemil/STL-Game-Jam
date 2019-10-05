@@ -62,12 +62,12 @@ public class SpriteAnimator : MonoBehaviour
         spriteIndex = 0;
         currentAnimationData = newAnimationData;
         SwitchState(animationState);
+        AudioManager.Instance.PlayEffectAudio(AudioManager.EffectType.ChangedCharacter);
     }
 
     public void SetAnimationSpeed(float newAnimationSpeed)
     {
         animationSpeed = newAnimationSpeed;
-        Debug.Log("Spedd : " + animationSpeed);
     }
 
     public void SetImageFlipX(bool isFlip)

@@ -11,11 +11,27 @@ public class AudioManager : Singleton<AudioManager>
 
     public enum BGMType
     {
-        Default, 
+        None = -1,
+        Title = 0,
+        State3_4,
+        State5_7,
+        LastState,
+        Ending1,
+        Ending2,
+        Ending3,
+
     }
     public enum EffectType
     {
-        Default,
+        ClickTitle,
+        LeftDoor,
+        RightDoor,
+        FloorDoor,
+        Landing,
+        CameraMoveLeft,
+        CameraMoveRight,
+        CameraMoveDown,
+        ChangedCharacter,
     }
 
 
@@ -25,6 +41,7 @@ public class AudioManager : Singleton<AudioManager>
     [SerializeField] GameObject[] CreatedSoundEffects;
     [SerializeField] private AudioDatas AudioDatas;
 
+    private BGMType bgmType = BGMType.None;
     public float BGMVolume = 1.0f;
     public float SFVoluem = 0.75f;
     bool bMuteBGM;
@@ -32,6 +49,8 @@ public class AudioManager : Singleton<AudioManager>
     public bool IsPausedBGM { get { return !BGMPlayer.isPlaying; } }
     public bool IsMuteBGM { get { return bMuteBGM; } }
     public bool IsMuteSF { get { return bMuteSF; } }
+
+    public BGMType CurrentBGMType=> bgmType;
 
     private void Awake()
     {
@@ -79,8 +98,11 @@ public class AudioManager : Singleton<AudioManager>
 
     Tweener BGMFadeOutTween;
     Tweener BGMFadeInTween;
-    public void PlayBGM(BGMType bgmType)
+    public void PlayBGM(BGMType newbgmType)
     {
+        if (bgmType == newbgmType)
+            return;
+        bgmType = newbgmType;
         if (BGMFadeOutTween != null && BGMFadeOutTween.IsPlaying())
         {
             BGMFadeOutTween.Kill();
@@ -95,13 +117,18 @@ public class AudioManager : Singleton<AudioManager>
         BGMFadeOutTween = GetBGMPlayer().DOFade(0, AudioDatas.BGMFadeDuration);
         BGMFadeOutTween.OnComplete(() =>
         {
-            GetBGMPlayer().clip = AudioDatas.BGMAudios[(int)bgmType];
+            GetBGMPlayer().clip = AudioDatas.BGMAudios[(int)newbgmType];
             GetBGMPlayer().Play();
             BGMFadeInTween = GetBGMPlayer().DOFade(AudioDatas.BGMVolume, AudioDatas.BGMFadeDuration); 
         });
     }
 
-    public void StopBGM(bool bActive)
+    public void SetLoopBGM(bool isLoop)
+    {
+        GetBGMPlayer().loop = isLoop;
+    }
+
+    public void StopBGM()
     {
         if (BGMFadeOutTween != null && BGMFadeOutTween.IsPlaying())
         {

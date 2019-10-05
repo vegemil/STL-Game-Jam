@@ -13,8 +13,23 @@ MonoBehaviour:
   m_Name: AudioData
   m_EditorClassIdentifier: 
   BGMAudios:
-  - {fileID: 8300000, guid: 7906818416a8b47479ae2e4fd1cf93da, type: 3}
-  EffectAudios: []
+  - {fileID: 8300000, guid: b188cf5ce2f333845ae39c2e0c4c85f9, type: 3}
+  - {fileID: 8300000, guid: d90631ea92d16cc448a82ba6b40fb06c, type: 3}
+  - {fileID: 8300000, guid: 79d9a0ca06f460a42ac93405d80ce5d8, type: 3}
+  - {fileID: 8300000, guid: 6d13b430282b9784db8b213c204f72fc, type: 3}
+  - {fileID: 8300000, guid: 7c55f3e329de25842bfc5dd54a39b475, type: 3}
+  - {fileID: 8300000, guid: 2d2895affc9df4c45b37cac82a9e4aab, type: 3}
+  - {fileID: 8300000, guid: 7e6666201f27fe94c95e790a636c0024, type: 3}
+  EffectAudios:
+  - {fileID: 8300000, guid: 7b1a2f594af7714439fd8eed160c214e, type: 3}
+  - {fileID: 8300000, guid: 3195cf24a6074d04c8534c6a32d75d24, type: 3}
+  - {fileID: 8300000, guid: bdad5d925488aa64e8e1825d0e09038c, type: 3}
+  - {fileID: 8300000, guid: 5bc6f96638f654d4a9e63d609fe1a1bc, type: 3}
+  - {fileID: 8300000, guid: 3029d87807b59954dbc06d5e62901260, type: 3}
+  - {fileID: 8300000, guid: e1951733bde41d14eb239dc6887bb8d1, type: 3}
+  - {fileID: 8300000, guid: b3f9d021b45774547b964a6056e67faa, type: 3}
+  - {fileID: 8300000, guid: a202f3831b514ee4da8a89a44274f7b9, type: 3}
+  - {fileID: 8300000, guid: f68e184eb9d389440a14275362234148, type: 3}
   BGMPlayerPrefab: {fileID: 4861889808697653468, guid: ddec887bcef1ae4409b1848fb55d3bc2,
     type: 3}
   EffectAudioPrefab: {fileID: 7766909722207251952, guid: d26749e060e89794bb48ac588672e661,

@@ -14,6 +14,7 @@ public class UIRoot : Singleton<UIRoot>
     }
 
 
+    [SerializeField] private GameController gameController;
     [SerializeField] private GameObject[] MenuRoots;
     [SerializeField] private RawImage titleImage;
     [SerializeField] private RawImage[] endingImages;
@@ -35,6 +36,16 @@ public class UIRoot : Singleton<UIRoot>
             root.gameObject.SetActive(false);
         }
         MenuRoots[(int)newMenu].gameObject.SetActive(true); 
+
+        switch(newMenu)
+        {
+            case MenuType.Title:
+                AudioManager.Instance.PlayBGM(AudioManager.BGMType.Title);
+                break;
+            case MenuType.Main:
+                gameController.Initalize();
+                break;
+        }
     }
 
     public void OnClickTitleImage()
@@ -44,7 +55,9 @@ public class UIRoot : Singleton<UIRoot>
 
         GameObject uiManager = GameObject.Find("RoomManager");
         MakeRooms makeRooms = uiManager.GetComponent<MakeRooms>();
-        makeRooms.resetRoom();
+        makeRooms.resetRoom();  
+        AudioManager.Instance.StopBGM();
+        AudioManager.Instance.PlayEffectAudio(AudioManager.EffectType.ClickTitle);
 
         fadeTween = titleImage.DOFade(0, tweenDelay).OnComplete(() =>
         {
@@ -71,6 +84,8 @@ public class UIRoot : Singleton<UIRoot>
         {
             SwitchMenu(MenuType.Ending);
             DOTween.Complete(fadeTween);
+            var newBgmType = (int)AudioManager.BGMType.Ending1 + (int)doorType;
+            AudioManager.Instance.PlayBGM((AudioManager.BGMType)newBgmType);
         });
     }
 
