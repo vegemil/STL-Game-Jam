@@ -8,7 +8,13 @@ public class CharacterSpriteData : ScriptableObject
 {
     public enum AnimationTyps
     {
-        Default = 0,
+        Level1 = 0,
+        Level2,
+        Level3,
+        Level4,
+        Level5,
+        Level6,
+        Level7,
     }
 
     [System.Serializable]

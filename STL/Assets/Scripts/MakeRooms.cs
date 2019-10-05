@@ -7,6 +7,7 @@ using UnityEngine;
 public class MakeRooms : MonoBehaviour
 {
     public Action onCreateRoom;
+    public Action onChangedRoom;
     public int MAX_FLOOR = 2;
     public int MAX_IMAGE = 5;
 
@@ -17,6 +18,7 @@ public class MakeRooms : MonoBehaviour
     private GameObject room;
      
     public Room CurrentRoom => room.GetComponent<Room>();
+    public int RoomLayer =>layer;
 
 
     private void makeRoom()
@@ -86,6 +88,7 @@ public class MakeRooms : MonoBehaviour
         {
             enableRoomBtn(false);
         }
+        onChangedRoom?.Invoke();
     }
 
     void makeItem()

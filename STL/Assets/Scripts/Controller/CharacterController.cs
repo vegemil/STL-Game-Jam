@@ -27,8 +27,7 @@ public class CharacterController : MonoBehaviour
     {
         character.Initalize();
         movement.Initalize();
-        PlayerCamera.onClickObject = OnClickObject;
-        character.Initalize();
+        PlayerCamera.onClickObject = OnClickObject; 
     }
 
     void UpdateAnimationState()

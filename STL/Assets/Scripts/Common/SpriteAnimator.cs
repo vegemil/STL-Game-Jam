@@ -45,7 +45,7 @@ public class SpriteAnimator : MonoBehaviour
     public void Initalize(CharacterSpriteData newAnimationData)
     {
         characterSpriteData = newAnimationData;
-        SetAnimationData(CharacterSpriteData.AnimationTyps.Default);
+        SetAnimationData(CharacterSpriteData.AnimationTyps.Level1);
         SwitchState(AnimationState.Idle); 
 
     }
