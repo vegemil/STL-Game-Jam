@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5551016227a79d24cb79fe71c3f4d866, type: 3}
   m_Name: AudioData
   m_EditorClassIdentifier: 
-  BGMAudios: []
+  BGMAudios:
+  - {fileID: 8300000, guid: 7906818416a8b47479ae2e4fd1cf93da, type: 3}
   EffectAudios: []
   BGMPlayerPrefab: {fileID: 4861889808697653468, guid: ddec887bcef1ae4409b1848fb55d3bc2,
     type: 3}

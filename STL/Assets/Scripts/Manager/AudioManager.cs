@@ -11,12 +11,11 @@ public class AudioManager : Singleton<AudioManager>
 
     public enum BGMType
     {
-        Stroy1_Default,
-        Stroy1_Radio,
+        Default, 
     }
     public enum EffectType
     {
-
+        Default,
     }
 
 

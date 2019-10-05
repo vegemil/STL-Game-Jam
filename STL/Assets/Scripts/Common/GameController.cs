@@ -17,6 +17,7 @@ public class GameController : MonoBehaviour
     {
         characterController.Initalize();
         characterController.Movement.OnEndMove = OnEndMove;
+        AudioManager.Instance.PlayBGM(AudioManager.BGMType.Default);
     }
 
     public void OnEndMove()
