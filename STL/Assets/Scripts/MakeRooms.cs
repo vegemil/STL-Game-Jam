@@ -28,6 +28,22 @@ public class MakeRooms : MonoBehaviour
         setSprite(leftWall, "L");
         setSprite(rightWall, "R");
         setSprite(floor, "F");
+
+        int index = UnityEngine.Random.Range(0, (int)Room.DoorTyps.MAX);
+        string[] doorNames = { "FD", "LD", "RD" };
+
+        int temp = 0;
+        foreach(string doorName in doorNames)
+        {
+            GameObject door = room.transform.Find(doorName).gameObject;
+            if(door)
+            {
+                int isShow = UnityEngine.Random.Range(0, 2);
+
+                door.SetActive(index == temp || Convert.ToBoolean(isShow));
+            }
+            temp++;
+        }
     }
 
     private string getObjectName(string prefix)
@@ -57,12 +73,24 @@ public class MakeRooms : MonoBehaviour
         {
             layer = 0;
         }
+
+        if(layer == MAX_FLOOR)
+        {
+            GameObject floorDoor = room.transform.Find("FD").gameObject;
+            floorDoor.SetActive(false);
+        }
+
         makeRoom();
     }
 
     public void moveSameFloor()
     {
         makeRoom();
+    }
+
+    void makeItem()
+    {
+
     }
 
     // Start is called before the first frame update

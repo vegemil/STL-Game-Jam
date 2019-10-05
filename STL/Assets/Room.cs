@@ -9,6 +9,7 @@ public class Room : MonoBehaviour
         Right,
         Left,
         Floor,
+        MAX,
     }
 
     [SerializeField] private GameObject leftDoor;
