@@ -1,11 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class CameraController : MonoBehaviour
 {
+    public Action<RaycastEventBinder> onClickObject;
     private Camera camera;
+    private GameObject lastClickObject;
+    public GameObject LastClickObject => lastClickObject;
 
     private void Awake()
     {
@@ -30,9 +34,12 @@ public class CameraController : MonoBehaviour
         bool isCollide = Physics.Raycast(ray, out raycastHit, maxRayDistance);
         if (!isCollide)
             return;
+        lastClickObject = raycastHit.collider.gameObject;
         Debug.Log($"Hit : {raycastHit.collider.gameObject.name} ");
         var eventBinder = raycastHit.collider.gameObject.GetComponent<RaycastEventBinder>();
         if (eventBinder)
             eventBinder.OnClick();
+        if (onClickObject != null)
+            onClickObject(eventBinder);
     }
 }
