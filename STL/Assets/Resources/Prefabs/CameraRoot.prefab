@@ -211,7 +211,7 @@ MonoBehaviour:
   ease: 5
   loopType: 2
   loopCount: 1
-  duration: 1
+  duration: 0.6
   delay: 0
   restartDelay: 0
   startTransform: {fileID: 5243320561424805825}
@@ -235,7 +235,7 @@ MonoBehaviour:
   ease: 5
   loopType: 2
   loopCount: 1
-  duration: 1
+  duration: 0.6
   delay: 0
   restartDelay: 0
   startTransform: {fileID: 5243320561424805825}

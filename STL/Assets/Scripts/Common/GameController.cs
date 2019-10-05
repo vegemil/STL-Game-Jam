@@ -55,9 +55,6 @@ public class GameController : MonoBehaviour
             characterController.Movement.MoveToPoint(newPlayerPosition, true);
         }, ()=>
         {
-            //Vector3 newPlayerPosition = roomMaker.CurrentRoom.CenterPosition;
-
-            //characterController.Movement.MoveToPoint(newPlayerPosition);
         });
         
     }
