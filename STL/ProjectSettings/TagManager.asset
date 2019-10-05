@@ -56,3 +56,6 @@ TagManager:
   - name: rightDoor
     uniqueID: 1306858743
     locked: 0
+  - name: floorDoor
+    uniqueID: 2740836949
+    locked: 0
