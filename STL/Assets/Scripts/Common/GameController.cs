@@ -20,9 +20,43 @@ public class GameController : MonoBehaviour
     }
 
     public void OnEndMove()
-    { 
-        Vector3 newPlayerPosition = roomMaker.CurrentRoom.GetNextRoomPosition(cameraController.LastClickObject);
-        roomMaker.moveNextFloor();
-        characterController.Movement.MoveToPoint(newPlayerPosition, true);
+    {
+        if (!cameraController.LastClickObject)
+            return;
+        Room.DoorTyps doorType = roomMaker.CurrentRoom.getDoorType(cameraController.LastClickObject);
+        CameraController.MoveDirectionType cameraMoveDirection = CameraController.MoveDirectionType.Bottom;
+
+        cameraController.CleaeClickObject();
+        switch (doorType)
+        {
+            case Room.DoorTyps.Floor:
+                cameraMoveDirection = CameraController.MoveDirectionType.Bottom;
+                break;
+            case Room.DoorTyps.Right:
+                cameraMoveDirection = CameraController.MoveDirectionType.Right;
+                break;
+            case Room.DoorTyps.Left:
+                cameraMoveDirection = CameraController.MoveDirectionType.Left;
+                break; 
+        }
+
+
+        cameraController.PlayMove(cameraMoveDirection, () =>
+        {
+            Vector3 newPlayerPosition = roomMaker.CurrentRoom.GetNextRoomPosition(cameraController.LastClickObject);
+
+            if (doorType == Room.DoorTyps.Floor)
+                roomMaker.moveNextFloor();
+            else
+                roomMaker.moveSameFloor();
+
+            characterController.Movement.MoveToPoint(newPlayerPosition, true);
+        }, ()=>
+        {
+            Vector3 newPlayerPosition = roomMaker.CurrentRoom.CenterPosition;
+
+            characterController.Movement.MoveToPoint(newPlayerPosition);
+        });
+        
     }
 }

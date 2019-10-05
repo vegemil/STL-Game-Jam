@@ -9,9 +9,6 @@ public class MakeRooms : MonoBehaviour
     public Action onCreateRoom;
     public int MAX_FLOOR = 2;
 
-    [SerializeField] private GameObject spawnRoot;
-
-
     private string prefabPath = "Prefabs/";
     private string texturePath = "Texture/";
     private int layer = 0;
