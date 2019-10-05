@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
 public class MakeRooms : MonoBehaviour
 {
+    public Action onCreateRoom;
     private string prefabPath = "Prefabs/";
     private string texturePath = "Texture/";
     private int layer = 0;
@@ -28,7 +30,7 @@ public class MakeRooms : MonoBehaviour
 
     private string getObjectName(string prefix)
     {
-        int index = Random.Range(0, 5);
+        int index = UnityEngine.Random.Range(0, 5);
 
         return prefix + layer.ToString() + index.ToString();
     }

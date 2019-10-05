@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class CameraController : MonoBehaviour
 {
+    public Action<RaycastEventBinder> onClickObject;
     private Camera camera;
 
     private void Awake()
@@ -34,5 +36,7 @@ public class CameraController : MonoBehaviour
         var eventBinder = raycastHit.collider.gameObject.GetComponent<RaycastEventBinder>();
         if (eventBinder)
             eventBinder.OnClick();
+        if (onClickObject != null)
+            onClickObject(eventBinder);
     }
 }

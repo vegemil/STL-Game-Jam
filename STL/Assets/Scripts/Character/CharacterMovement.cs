@@ -24,6 +24,13 @@ public class CharacterMovement : MonoBehaviour
         CheckMove();
     }
 
+    public void Initalize()
+    {
+
+        isMoving = false;
+        destPoint = gameObject.transform.position;
+        moveDirection = Vector3.zero;
+    }
 
     public void MoveToPoint(Vector3 newDestPoint, bool isNow = false)
     {
@@ -60,8 +67,8 @@ public class CharacterMovement : MonoBehaviour
             isMoving = false;
             
         }
-
-        UpdateMove();
+        if(gameObject.transform.position != destPoint)
+            UpdateMove();
     }
 
     void UpdateMove()
