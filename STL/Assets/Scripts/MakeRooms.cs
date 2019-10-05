@@ -7,8 +7,10 @@ using UnityEngine;
 public class MakeRooms : MonoBehaviour
 {
     public Action onCreateRoom;
+    public int MAX_FLOOR = 2;
 
     [SerializeField] private GameObject spawnRoot;
+
 
     private string prefabPath = "Prefabs/";
     private string texturePath = "Texture/";
@@ -29,8 +31,6 @@ public class MakeRooms : MonoBehaviour
         setSprite(leftWall, "L");
         setSprite(rightWall, "R");
         setSprite(floor, "F");
-
-        
     }
 
     private string getObjectName(string prefix)
@@ -46,6 +46,7 @@ public class MakeRooms : MonoBehaviour
         var render = obj.GetComponent<SpriteRenderer>();
         if (render)
         {
+            //Debug.Log("FILE NAME : " + objName);
             Sprite sprite = Resources.Load(texturePath + objName, typeof(Sprite)) as Sprite;
             render.sprite = sprite;
         }
@@ -54,6 +55,11 @@ public class MakeRooms : MonoBehaviour
     public void moveNextFloor()
     {
         layer++;
+
+        if(layer >= MAX_FLOOR)
+        {
+            layer = 0;
+        }
         makeRoom();
     }
 
