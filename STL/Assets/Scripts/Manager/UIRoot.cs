@@ -57,6 +57,7 @@ public class UIRoot : Singleton<UIRoot>
         MakeRooms makeRooms = uiManager.GetComponent<MakeRooms>();
         makeRooms.resetRoom();  
         AudioManager.Instance.StopBGM();
+        AudioManager.Instance.PlayEffectAudio(AudioManager.EffectType.ClickTitle);
 
         fadeTween = titleImage.DOFade(0, tweenDelay).OnComplete(() =>
         {

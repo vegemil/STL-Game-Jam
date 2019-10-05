@@ -35,17 +35,20 @@ public class GameController : MonoBehaviour
         cameraController.CleaeClickObject();
         switch (doorType)
         {
-            case Room.DoorTyps.Floor:
+            case Room.DoorTyps.Floor: 
                 cameraMoveDirection = CameraController.MoveDirectionType.Bottom;
                 break;
-            case Room.DoorTyps.Right:
+            case Room.DoorTyps.Right: 
                 cameraMoveDirection = CameraController.MoveDirectionType.Right;
                 break;
-            case Room.DoorTyps.Left:
+            case Room.DoorTyps.Left: 
                 cameraMoveDirection = CameraController.MoveDirectionType.Left;
                 break; 
         }
-
+        int SFIndex = (int)AudioManager.EffectType.CameraMoveLeft + (int)doorType;
+        AudioManager.Instance.PlayEffectAudio((AudioManager.EffectType)SFIndex);
+        SFIndex = (int)AudioManager.EffectType.LeftDoor + (int)doorType;
+        AudioManager.Instance.PlayEffectAudio((AudioManager.EffectType)SFIndex);
 
         cameraController.PlayMove(cameraMoveDirection, () =>
         {
@@ -56,6 +59,8 @@ public class GameController : MonoBehaviour
             characterController.Movement.MoveToPoint(newPlayerPosition, true);
         }, ()=>
         {
+            if(doorType == Room.DoorTyps.Floor)
+                AudioManager.Instance.PlayEffectAudio(AudioManager.EffectType.Landing);
         });
         
     }
