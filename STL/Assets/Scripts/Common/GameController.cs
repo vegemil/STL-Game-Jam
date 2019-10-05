@@ -6,6 +6,7 @@ public class GameController : MonoBehaviour
 {
     [SerializeField] private MakeRooms roomMaker;
     [SerializeField] private CharacterController characterController;
+    [SerializeField] private CameraController cameraController;
 
     private void OnEnable()
     {
@@ -15,5 +16,13 @@ public class GameController : MonoBehaviour
     public void Initalize()
     {
         characterController.Initalize();
+        characterController.Movement.OnEndMove = OnEndMove;
+    }
+
+    public void OnEndMove()
+    { 
+        Vector3 newPlayerPosition = roomMaker.CurrentRoom.GetNextRoomPosition(cameraController.LastClickObject);
+        roomMaker.moveNextFloor();
+        characterController.Movement.MoveToPoint(newPlayerPosition, true);
     }
 }

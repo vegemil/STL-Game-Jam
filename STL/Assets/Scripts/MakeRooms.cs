@@ -7,11 +7,16 @@ using UnityEngine;
 public class MakeRooms : MonoBehaviour
 {
     public Action onCreateRoom;
+
+    [SerializeField] private GameObject spawnRoot;
+
     private string prefabPath = "Prefabs/";
     private string texturePath = "Texture/";
     private int layer = 0;
 
     private GameObject room;
+     
+    public Room CurrentRoom => room.GetComponent<Room>();
 
 
     private void makeRoom()
@@ -25,7 +30,7 @@ public class MakeRooms : MonoBehaviour
         setSprite(rightWall, "R");
         setSprite(floor, "F");
 
-        Instantiate(room);
+        
     }
 
     private string getObjectName(string prefix)
@@ -61,6 +66,8 @@ public class MakeRooms : MonoBehaviour
     void Start()
     {
         room = Resources.Load(prefabPath + "Room", typeof(GameObject)) as GameObject;
+
+        room = Instantiate(room);
         makeRoom();
     }
 
