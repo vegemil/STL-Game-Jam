@@ -8,6 +8,7 @@ public class MakeRooms : MonoBehaviour
 {
     public Action onCreateRoom;
     public Action onChangedRoom;
+    public Action onEndGame;
     public int MAX_FLOOR = 2;
     public int MAX_IMAGE = 5;
 
@@ -83,12 +84,13 @@ public class MakeRooms : MonoBehaviour
         if (!checkEnding(doorTyps))
         {
             makeRoom();
+            onChangedRoom?.Invoke();
         }
         else
         {
             enableRoomBtn(false);
+            onEndGame?.Invoke();
         }
-        onChangedRoom?.Invoke();
     }
 
     void makeItem()

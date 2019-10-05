@@ -87,7 +87,7 @@ public class CameraController : MonoBehaviour
 
     void CheckHit()
     {
-        bool isCursorOnUI = EventSystem.current.currentSelectedGameObject == null;
+        bool isCursorOnUI = EventSystem.current.currentSelectedGameObject != null;
         if (isCursorOnUI)
             return;
         float maxRayDistance = 5000f;

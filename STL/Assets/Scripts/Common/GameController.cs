@@ -16,6 +16,7 @@ public class GameController : MonoBehaviour
     public void Initalize()
     {
         roomMaker.onChangedRoom = OnChangedRoom;
+        roomMaker.onEndGame = OnEndGame;
         characterController.Initalize();
         characterController.Movement.OnEndMove = OnEndMove;
         AudioManager.Instance.PlayBGM(AudioManager.BGMType.Default);
@@ -62,5 +63,10 @@ public class GameController : MonoBehaviour
     {
         CharacterSpriteData.AnimationTyps newAnimation = (CharacterSpriteData.AnimationTyps)roomMaker.RoomLayer;
         characterController.Character.SpriteAnimator.SetAnimationData(newAnimation);
+    }
+
+    void OnEndGame()
+    {
+        Initalize();
     }
 }
