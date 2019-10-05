@@ -47,13 +47,20 @@ public class CharacterController : MonoBehaviour
 
             float animationSpeedMultipler = Mathf.Clamp((movement.Speed / movement.MaxSpeed), 0, 1);
             character.SpriteAnimator.SetAnimationSpeed(animationSpeedMultipler);
-
         }
+
+        
 
     }
 
     void OnClickObject(RaycastEventBinder raycastTarget)
     {
+        Vector3 deltaPos = raycastTarget.transform.position - gameObject.transform.position;
+        bool isRight = deltaPos.x > 0;
+        if (isRight)
+            character.SpriteAnimator.SetImageFlipX(true);
+        else
+            character.SpriteAnimator.SetImageFlipX(false);
         movement.MoveToPoint(raycastTarget.transform.position);
     }
 

@@ -74,6 +74,11 @@ public class SpriteAnimator : MonoBehaviour
         Debug.Log("Spedd : " + animationSpeed);
     }
 
+    public void SetImageFlipX(bool isFlip)
+    {
+        targetSpriteRenderer.flipX = isFlip;
+    }
+
     public void SwitchState(AnimationState newState)
     {
         animationSpeed = 1f;
