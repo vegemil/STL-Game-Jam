@@ -192,6 +192,21 @@ PrefabInstance:
       propertyPath: roomMaker
       value: 
       objectReference: {fileID: 441717478}
+    - target: {fileID: 7171319461079976287, guid: eee4fc3f6b26e5f4eaaf3a7c0b17925b,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7171319461079976287, guid: eee4fc3f6b26e5f4eaaf3a7c0b17925b,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 3382356557842652206, guid: eee4fc3f6b26e5f4eaaf3a7c0b17925b,
+        type: 3}
+      propertyPath: orthographic size
+      value: 5.14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eee4fc3f6b26e5f4eaaf3a7c0b17925b, type: 3}
 --- !u!1 &398279368
@@ -435,7 +450,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8427946aedb524c2fafb32862ee63455, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MAX_FLOOR: 2
+  MAX_FLOOR: 6
+  MAX_IMAGE: 3
 --- !u!4 &441717479
 Transform:
   m_ObjectHideFlags: 0
