@@ -36,6 +36,7 @@ public class CharacterMovement : MonoBehaviour
     {
         isMoving = true;
         destPoint = newDestPoint;
+        destPoint.z = gameObject.transform.position.z;
         moveDirection = Vector3.Normalize(destPoint - gameObject.transform.position);
 
         if (isNow)
