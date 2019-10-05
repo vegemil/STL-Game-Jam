@@ -450,7 +450,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8427946aedb524c2fafb32862ee63455, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MAX_FLOOR: 6
+  MAX_FLOOR: 7
   MAX_IMAGE: 3
 --- !u!4 &441717479
 Transform:
