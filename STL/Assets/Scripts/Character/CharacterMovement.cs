@@ -8,43 +8,57 @@ public class CharacterMovement : MonoBehaviour
     public Action OnEndMove;
 
     [SerializeField] private float accSpeed;
+    [SerializeField] private float deAccSpeed = 3;
     [SerializeField] private float maxSpeed;
-    [SerializeField] private float locateAreaLength = 0.5f;
+    [SerializeField] private float locateAreaLength = 1f; 
 
     Vector3 moveDirection; 
     Vector3 destPoint;
-
+    [SerializeField] private float speed;
     bool isMoving;
-
+    bool isLocated = false;
 
     private void Update()
     {
+        CheckSpeedAcc();
         CheckMove();
     }
 
 
     public void MoveToPoint(Vector3 newDestPoint, bool isNow = false)
     {
+        isMoving = true;
         destPoint = newDestPoint;
         moveDirection = Vector3.Normalize(destPoint - gameObject.transform.position);
 
         if (isNow)
-            gameObject.transform.position = destPoint;
+            gameObject.transform.position = destPoint; 
 
     }
 
 
+    void CheckSpeedAcc()
+    {
+        if(isLocated)
+            speed -= deAccSpeed * Time.deltaTime; 
+        else
+            speed += accSpeed * Time.deltaTime;
+
+        if (speed > maxSpeed)
+            speed = maxSpeed;
+        if (speed < 0)
+            speed = 0;
+    }
+
     void CheckMove()
     {
-
-        bool isLocated = locateAreaLength > (gameObject.transform.position - destPoint).sqrMagnitude;
+        isLocated = locateAreaLength > (gameObject.transform.position - destPoint).sqrMagnitude;
         if (isLocated)
         {
             if (isMoving && OnEndMove != null)
                 OnEndMove();
             isMoving = false;
-
-            return;
+            
         }
 
         UpdateMove();
@@ -54,9 +68,8 @@ public class CharacterMovement : MonoBehaviour
     {
         Vector3 addPosition;
 
-        isMoving = true;
         moveDirection = Vector3.Normalize(destPoint - gameObject.transform.position);
-        addPosition = moveDirection * maxSpeed * Time.deltaTime;
+        addPosition = moveDirection * speed * Time.deltaTime;
          
 
 
