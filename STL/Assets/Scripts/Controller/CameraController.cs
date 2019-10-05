@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,14 +7,32 @@ using UnityEngine.EventSystems;
 
 public class CameraController : MonoBehaviour
 {
+    public enum MoveDirectionType
+    {
+        Top,
+        Right,
+        Bottom,
+        Left,
+    }
+
     public Action<RaycastEventBinder> onClickObject;
+    public Action onEndOutMove;
+    public Action onEndInMove;
+
+    [SerializeField] private DoMovePlayer outMovePlayer;
+    [SerializeField] private DoMovePlayer inMovePlayer;
+    [SerializeField] private Transform[] moveDests;
     private Camera camera;
     private GameObject lastClickObject;
+    private bool isMovingCamera;
+
     public GameObject LastClickObject => lastClickObject;
+    public bool IsMovingCamera => isMovingCamera;
 
     private void Awake()
     {
         camera = gameObject.GetComponent<Camera>();
+        isMovingCamera = false;
     }
 
     // Update is called once per frame
@@ -23,6 +42,46 @@ public class CameraController : MonoBehaviour
         if (Input.GetMouseButtonDown(0)) 
             CheckHit(); 
 
+    }
+
+    public void CleaeClickObject()
+    {
+        lastClickObject = null;
+    }
+
+    public void PlayMove(MoveDirectionType outMoveDirection, Action newOnEndOutMove = null, Action newOnEndInMove = null)
+    {
+        onEndOutMove = newOnEndOutMove;
+        onEndInMove = newOnEndInMove;
+        MoveDirectionType inMoveDirection = MoveDirectionType.Top;
+        if (outMoveDirection == MoveDirectionType.Bottom)
+            inMoveDirection = MoveDirectionType.Top; 
+        if (outMoveDirection == MoveDirectionType.Right)
+            inMoveDirection = MoveDirectionType.Left;
+        if (outMoveDirection == MoveDirectionType.Left)
+            inMoveDirection = MoveDirectionType.Right;
+
+        isMovingCamera = true;
+        Transform destOutPosition = moveDests[(int)outMoveDirection];
+        Transform startInPosition = moveDests[(int)inMoveDirection];
+        outMovePlayer.endTransform = destOutPosition;
+        inMovePlayer.startTransform = startInPosition;
+
+
+
+        outMovePlayer.PlayTween();
+        outMovePlayer.OnComplate = (tween) =>
+        {
+            inMovePlayer.PlayTween();
+            if (onEndOutMove != null)
+                onEndOutMove();
+        };
+        inMovePlayer.OnComplate = (tween) =>
+         {
+             isMovingCamera = false;
+             if (onEndInMove != null)
+                 onEndInMove();
+         };
     }
 
     void CheckHit()
