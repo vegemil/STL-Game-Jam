@@ -56,6 +56,9 @@ TagManager:
   - name: rightDoor
     uniqueID: 1306858743
     locked: 0
+<<<<<<< HEAD
   - name: floorDoor
     uniqueID: 2740836949
     locked: 0
+=======
+>>>>>>> Room
