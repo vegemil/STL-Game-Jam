@@ -67,7 +67,6 @@ public class SpriteAnimator : MonoBehaviour
     public void SetAnimationSpeed(float newAnimationSpeed)
     {
         animationSpeed = newAnimationSpeed;
-        Debug.Log("Spedd : " + animationSpeed);
     }
 
     public void SetImageFlipX(bool isFlip)

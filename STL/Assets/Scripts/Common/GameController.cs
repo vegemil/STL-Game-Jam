@@ -7,10 +7,10 @@ public class GameController : MonoBehaviour
     [SerializeField] private MakeRooms roomMaker;
     [SerializeField] private CharacterController characterController;
     [SerializeField] private CameraController cameraController;
+    private int currentLayer;
 
     private void OnEnable()
-    {
-        Initalize();
+    { 
     }
 
     public void Initalize()
@@ -19,7 +19,8 @@ public class GameController : MonoBehaviour
         roomMaker.onEndGame = OnEndGame;
         characterController.Initalize();
         characterController.Movement.OnEndMove = OnEndMove;
-        AudioManager.Instance.PlayBGM(AudioManager.BGMType.Default);
+        UpdateLayerBGM();
+        currentLayer = 0;
     }
 
     public void OnEndMove()
@@ -59,10 +60,38 @@ public class GameController : MonoBehaviour
         
     }
 
+    void UpdateLayerBGM()
+    {
+        if (currentLayer == roomMaker.RoomLayer)
+            return;
+        currentLayer = roomMaker.RoomLayer;
+        if (roomMaker.RoomLayer < 2)
+        {
+            AudioManager.Instance.StopBGM();
+        }
+        else if (roomMaker.RoomLayer < 4)
+        {
+            AudioManager.Instance.SetLoopBGM(false);
+            AudioManager.Instance.PlayBGM(AudioManager.BGMType.State3_4);
+        }
+        else if (roomMaker.RoomLayer < 6)
+        {
+            AudioManager.Instance.SetLoopBGM(true);
+            AudioManager.Instance.PlayBGM(AudioManager.BGMType.State5_7);
+        }
+        else
+        {
+            AudioManager.Instance.PlayBGM(AudioManager.BGMType.LastState);
+        }
+    }
+
     void OnChangedRoom()
     {
         CharacterSpriteData.AnimationTyps newAnimation = (CharacterSpriteData.AnimationTyps)roomMaker.RoomLayer;
         characterController.Character.SpriteAnimator.SetAnimationData(newAnimation);
+
+        UpdateLayerBGM();
+
     }
 
     void OnEndGame()
