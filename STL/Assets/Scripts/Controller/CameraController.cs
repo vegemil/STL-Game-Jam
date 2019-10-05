@@ -78,9 +78,9 @@ public class CameraController : MonoBehaviour
         };
         inMovePlayer.OnComplate = (tween) =>
          {
-             isMovingCamera = false;
              if (onEndInMove != null)
                  onEndInMove();
+             isMovingCamera = false;
          };
     }
 
