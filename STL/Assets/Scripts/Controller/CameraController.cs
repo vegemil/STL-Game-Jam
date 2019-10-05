@@ -1,6 +1,7 @@
 ﻿using System;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CameraController : MonoBehaviour
 {
@@ -86,7 +87,9 @@ public class CameraController : MonoBehaviour
 
     void CheckHit()
     {
-
+        bool isCursorOnUI = EventSystem.current.currentSelectedGameObject == null;
+        if (isCursorOnUI)
+            return;
         float maxRayDistance = 5000f;
         RaycastHit raycastHit = new RaycastHit();
         Ray ray = camera.ScreenPointToRay(Input.mousePosition);
