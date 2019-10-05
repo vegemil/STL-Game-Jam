@@ -6,8 +6,8 @@ public class Room : MonoBehaviour
 {
     public enum DoorTyps
     {
-        Right,
         Left,
+        Right,
         Floor,
         MAX,
     }

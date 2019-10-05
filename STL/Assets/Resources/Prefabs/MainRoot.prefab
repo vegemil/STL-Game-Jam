@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8917563003295374564}
   m_Layer: 0
-  m_Name: RoomROot
+  m_Name: RoomRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89,7 +89,7 @@ PrefabInstance:
     - target: {fileID: 1748567911945524735, guid: 44c801058db8de24293cc8446a89aa94,
         type: 3}
       propertyPath: m_Name
-      value: CharacterController (3)
+      value: CharacterController
       objectReference: {fileID: 0}
     - target: {fileID: 1748567911945524732, guid: 44c801058db8de24293cc8446a89aa94,
         type: 3}
@@ -165,16 +165,6 @@ PrefabInstance:
         type: 3}
       propertyPath: maxSpeed
       value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1748567911902396968, guid: 44c801058db8de24293cc8446a89aa94,
-        type: 3}
-      propertyPath: m_Size.x
-      value: 1.19
-      objectReference: {fileID: 0}
-    - target: {fileID: 1748567911902396968, guid: 44c801058db8de24293cc8446a89aa94,
-        type: 3}
-      propertyPath: m_Size.y
-      value: 1.19
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 44c801058db8de24293cc8446a89aa94, type: 3}

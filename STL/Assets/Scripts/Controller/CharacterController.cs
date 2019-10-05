@@ -18,15 +18,49 @@ public class CharacterController : MonoBehaviour
         Initalize();
     }
 
-    public void Initalize()
+    private void Update()
     {
-        movement.Initalize();
-        PlayerCamera.onClickObject = OnClickObject;
+        UpdateAnimationState();
     }
 
+    public void Initalize()
+    {
+        character.Initalize();
+        movement.Initalize();
+        PlayerCamera.onClickObject = OnClickObject;
+        character.Initalize();
+    }
+
+    void UpdateAnimationState()
+    {
+        if(movement.Speed <= 0)
+        {
+            if (character.SpriteAnimator.CurrentAnimationState == SpriteAnimator.AnimationState.Idle)
+                return;
+            character.SpriteAnimator.SwitchState(SpriteAnimator.AnimationState.Idle);
+            character.SpriteAnimator.SetAnimationSpeed(1);
+        }
+        else
+        {
+            if (character.SpriteAnimator.CurrentAnimationState != SpriteAnimator.AnimationState.Walk)
+                character.SpriteAnimator.SwitchState(SpriteAnimator.AnimationState.Walk);
+
+            float animationSpeedMultipler = Mathf.Clamp((movement.Speed / movement.MaxSpeed), 0, 1);
+            character.SpriteAnimator.SetAnimationSpeed(animationSpeedMultipler);
+        }
+
+        
+
+    }
 
     void OnClickObject(RaycastEventBinder raycastTarget)
     {
+        Vector3 deltaPos = raycastTarget.transform.position - gameObject.transform.position;
+        bool isRight = deltaPos.x > 0;
+        if (isRight)
+            character.SpriteAnimator.SetImageFlipX(true);
+        else
+            character.SpriteAnimator.SetImageFlipX(false);
         movement.MoveToPoint(raycastTarget.transform.position);
     }
 

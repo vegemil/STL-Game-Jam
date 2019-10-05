@@ -18,6 +18,11 @@ public class CharacterMovement : MonoBehaviour
     bool isMoving;
     bool isLocated = false;
 
+
+    public float Speed => speed;
+    public float MaxSpeed => maxSpeed;
+
+
     private void Update()
     {
         CheckSpeedAcc();

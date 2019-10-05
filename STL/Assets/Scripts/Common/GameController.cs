@@ -21,6 +21,8 @@ public class GameController : MonoBehaviour
 
     public void OnEndMove()
     {
+        if (cameraController.IsMovingCamera)
+            return;
         if (!cameraController.LastClickObject)
             return;
         Room.DoorTyps doorType = roomMaker.CurrentRoom.getDoorType(cameraController.LastClickObject);
@@ -45,17 +47,11 @@ public class GameController : MonoBehaviour
         {
             Vector3 newPlayerPosition = roomMaker.CurrentRoom.GetNextRoomPosition(cameraController.LastClickObject);
 
-            if (doorType == Room.DoorTyps.Floor)
-                roomMaker.moveNextFloor();
-            else
-                roomMaker.moveSameFloor();
+            roomMaker.moveRoom(doorType);
 
             characterController.Movement.MoveToPoint(newPlayerPosition, true);
         }, ()=>
         {
-            Vector3 newPlayerPosition = roomMaker.CurrentRoom.CenterPosition;
-
-            characterController.Movement.MoveToPoint(newPlayerPosition);
         });
         
     }

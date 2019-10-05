@@ -5,6 +5,18 @@ using UnityEngine;
 public class CharacterBase : MonoBehaviour
 {
 
+    [SerializeField] private SpriteAnimator spriteAnimator;
+    CharacterSpriteData characterSpriteData;
 
+    public SpriteAnimator SpriteAnimator => spriteAnimator;
 
+    public void Initalize()
+    {
+        int index = (int)CharacterSpriteData.AnimationTyps.Default;
+        characterSpriteData = Resources.Load<CharacterSpriteData>("Datas/CharacterSpriteData");
+        
+        spriteAnimator.Initalize(characterSpriteData);
+
+    }
+     
 }
