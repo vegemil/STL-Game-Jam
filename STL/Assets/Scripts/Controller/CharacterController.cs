@@ -54,6 +54,9 @@ public class CharacterController : MonoBehaviour
 
     void OnClickObject(RaycastEventBinder raycastTarget)
     {
+        if (playerCamera.IsMovingCamera)
+            return;
+
         Vector3 deltaPos = raycastTarget.transform.position - gameObject.transform.position;
         bool isRight = deltaPos.x > 0;
         if (isRight)

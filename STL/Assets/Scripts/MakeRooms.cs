@@ -76,7 +76,9 @@ public class MakeRooms : MonoBehaviour
 
     public void moveRoom(Room.DoorTyps doorTyps)
     {
-        if(doorTyps == Room.DoorTyps.Floor || layer == MAX_FLOOR - 1)
+        enableRoomBtn(false);
+
+        if (doorTyps == Room.DoorTyps.Floor || layer == MAX_FLOOR - 1)
         {
             layer++;
         }
@@ -85,6 +87,7 @@ public class MakeRooms : MonoBehaviour
         {
             makeRoom();
             onChangedRoom?.Invoke();
+            enableRoomBtn(true);
         }
         else
         {
@@ -119,7 +122,7 @@ public class MakeRooms : MonoBehaviour
         enableRoomBtn(true);
     }
 
-    void enableRoomBtn(bool isClick)
+    public void enableRoomBtn(bool isClick)
     {
         string[] doorNames = { "FD", "LD", "RD" };
 

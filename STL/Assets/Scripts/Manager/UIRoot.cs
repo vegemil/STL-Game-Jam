@@ -11,6 +11,7 @@ public class UIRoot : Singleton<UIRoot>
         Title,
         Main,
         Ending,
+        Exit
     }
 
 
@@ -27,6 +28,14 @@ public class UIRoot : Singleton<UIRoot>
     {
         DOTween.Init(true, true, LogBehaviour.Default);
         SwitchMenu(MenuType.Title);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            ShowExitPopup();
+        }
     }
 
     public void SwitchMenu(MenuType newMenu)
@@ -51,6 +60,9 @@ public class UIRoot : Singleton<UIRoot>
     public void OnClickTitleImage()
     {
         if (fadeTween!= null && fadeTween.IsPlaying())
+            return;
+
+        if (MenuRoots[(int)MenuType.Exit].gameObject.activeSelf)
             return;
 
         GameObject uiManager = GameObject.Find("RoomManager");
@@ -91,8 +103,37 @@ public class UIRoot : Singleton<UIRoot>
 
     public void OnClickEnding()
     {
+        if (MenuRoots[(int)MenuType.Exit].gameObject.activeSelf)
+            return;
+
         SwitchMenu(MenuType.Title);
     }
 
+    private void ShowExitPopup()
+    {
+        MenuRoots[(int)MenuType.Exit].gameObject.SetActive(true);
+
+        GameObject room = GameObject.Find("RoomManager");
+        MakeRooms roomManager = room.GetComponent<MakeRooms>();
+        roomManager.enableRoomBtn(false);
+    }
+
+    public void OnClickExit()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+         Application.Quit();
+#endif
+    }
+
+    public void OnClickCancel()
+    {
+        MenuRoots[(int)MenuType.Exit].gameObject.SetActive(false);
+
+        GameObject room = GameObject.Find("RoomManager");
+        MakeRooms roomManager = room.GetComponent<MakeRooms>();
+        roomManager.enableRoomBtn(true);
+    }
 
 }
